@@ -538,7 +538,7 @@ document.addEventListener('toggle',e=>{
 },true);
 function getStepText(i,j) {
   const base=lessons[i].exercise.steps[j];
-  const saved=(data.lessons[i]||{}).stepOverrides;
+  const saved=(data.lessons[i]||{}).topicStepOverrides;
   return i===0 && saved && typeof saved[j]==='string' ? saved[j] : base;
 }
 function renderExerciseStep(i,j,s,steps) {
@@ -597,9 +597,9 @@ function saveEditedStep(j){
   if(!el)return;
   const value=el.value.trim();
   if(!value){alert('Escribe una instrucción antes de guardarla.');el.focus();return}
-  const ld=lessonData(0);ld.stepOverrides??={};
-  if(value===lessons[0].exercise.steps[j])delete ld.stepOverrides[j];
-  else ld.stepOverrides[j]=value;
+  const ld=lessonData(0);ld.topicStepOverrides??={};
+  if(value===lessons[0].exercise.steps[j])delete ld.topicStepOverrides[j];
+  else ld.topicStepOverrides[j]=value;
   editingStep=null;save();render();notify('Paso guardado');
 }
 function saveEditedQuestion(){
@@ -691,7 +691,7 @@ document.addEventListener('click',e=>{
   if(clicked.hasAttribute('data-revert-step')){
     const j=Number(clicked.dataset.revertStep);
     if(!confirm('¿Restaurar el texto original de este paso?'))return;
-    const ld=lessonData(0);if(ld.stepOverrides)delete ld.stepOverrides[j];
+    const ld=lessonData(0);if(ld.topicStepOverrides)delete ld.topicStepOverrides[j];
     editingStep=null;save();render();notify('Texto original restaurado');return;
   }
   if(clicked.hasAttribute('data-add-question')){

@@ -145,6 +145,26 @@
     @media(max-width:750px){.navdemo-layout{grid-template-columns:1fr;gap:14px}.navdemo-help{max-width:340px;margin:auto;width:100%}.navdemo-help>p{margin:6px 0 12px}}
     @media(max-width:520px){.navdemo{padding:12px}.navdemo-phone{max-width:230px}.navdemo-screen{height:260px}.navdemo-help>div{padding:5px 0}}
     @media(prefers-reduced-motion:reduce){.navdemo-view{animation:none}}
+
+    /* Alternativas de navegación: selección visible y operativa en el simulador */
+    .navdemo-variants{background:#fefefa;border:1px solid #d4e4db;border-radius:12px;padding:12px;margin:12px 0 18px}
+    .navdemo-variants>strong{display:block;font-size:13px;color:#275752;margin-bottom:9px}
+    .navdemo-variant-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+    .navdemo-variant-options button{border:1px solid #b8cec2;border-radius:9px;background:white;color:#2c5d58;font-size:12px;font-weight:800;padding:9px 6px;min-height:39px;cursor:pointer}
+    .navdemo-variant-options button[aria-pressed="true"]{color:white;background:#1e5961;border-color:#1e5961}
+    .navdemo-order{margin-top:11px;display:flex;align-items:center;gap:9px;color:#375e59;font-size:12px;font-weight:700}
+    .navdemo-order input{width:17px;height:17px;accent-color:#1e5961;flex:none}
+    .navdemo-note{font-size:11px!important;line-height:1.5!important;margin:9px 0 0!important}
+    .navdemo-nav.gestures{align-items:center;justify-content:center}
+    .navdemo-nav .navdemo-handle{height:40px;width:100%;border:0;background:none;display:grid;place-items:center;cursor:pointer}
+    .navdemo-nav .navdemo-handle::before{content:"";width:82px;height:5px;border-radius:9px;background:#ced7d7}
+    .navdemo-phone.gesture-nav .navdemo-screen{touch-action:none}
+    .navdemo-gestures{padding:12px;margin-top:12px;background:#e7f2ea;border:1px solid #cde2d4;border-radius:12px}
+    .navdemo-gestures[hidden]{display:none}
+    .navdemo-gestures p{font-size:12px;line-height:1.5;margin:0 0 8px!important}
+    .navdemo-gesture-actions{display:flex;flex-wrap:wrap;gap:7px}
+    .navdemo-gesture-actions button{padding:8px 9px;border-radius:8px;border:1px solid #bad0c3;background:#fff;color:#25574f;font-size:11px;font-weight:700}
+    @media(max-width:520px){.navdemo-variants{padding:10px}.navdemo-variant-options button{font-size:11px}}
   </style>
 </head>
 <body>
@@ -273,7 +293,7 @@ function home(){return `<div class="page">
  <section class="section"><div class="section-head"><h2>La idea que lo cambia todo</h2></div><div class="pair"><div class="panel"><div class="tag">TRES OBJETIVOS</div><ol class="rule-list"><li><b>Orientarse</b>: dominar movimientos y pantallas.</li><li><b>Resolver</b>: aplicar lo aprendido en situaciones reales.</li><li><b>Preguntar</b>: aprender a pedir ayuda a la IA.</li></ol></div><div class="panel"><div class="tag orange">REGLA DE ORO</div><p>La siguiente clase llega cuando tengan soltura, no porque haya pasado una semana. Si una habilidad requiere tres sesiones, le dedicamos tres.</p>${btn('Consultar el método →','metodo')}</div></div></section>
  <section class="section"><div class="panel"><h3>Lo primero: una conversación, no un examen</h3><p>La entrevista inicial tiene diez preguntas. Puedes registrar por separado las respuestas de ambos, incluidos sus intereses y dudas, y ver qué queda por revisar.</p><div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><b>${surveyReviewed()} / ${interview.length} preguntas revisadas</b>${btn('Abrir la encuesta →','encuesta')}</div></div></section>
  </div>`}
-const androidNavGuide = "\n<section class=\"panel android-guide\" aria-labelledby=\"nav3-title\">\n  <span class=\"tag\">CLASE 1 · GUÍA VISUAL</span>\n  <h2 id=\"nav3-title\" style=\"margin:12px 0 9px\">Los tres botones de navegación de Android</h2>\n  <p>Esta es la barra inferior de la imagen que nos has enviado. El <b>cuadrado relleno</b> es Aplicaciones recientes, el <b>círculo</b> es Inicio y el <b>triángulo</b> es Atrás. La imagen reproduce estos símbolos y su orden.</p>\n  <div class=\"android-nav-screen\" role=\"img\" aria-label=\"Barra negra con un cuadrado gris relleno a la izquierda para Aplicaciones recientes, un círculo gris con contorno en el centro para Inicio y un triángulo gris apuntando a la izquierda a la derecha para Atrás\">\n    <div class=\"android-nav-bar\">\n      <span><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><rect x=\"16\" y=\"16\" width=\"32\" height=\"32\" rx=\"5\" fill=\"currentColor\"/></svg></span><span><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"32\" cy=\"32\" r=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/></svg></span><span><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M47 12 L14 32 L47 52 Z\" fill=\"currentColor\"/></svg></span>\n    </div>\n  </div>\n\n  <div class=\"navdemo\" id=\"navdemo\">\n    <span class=\"tag\">BOCETO ANIMADO · PRÁCTICA</span>\n    <h3>Aprende viendo un móvil de ejemplo</h3>\n    <p>El teléfono abrirá aplicaciones de prueba y utilizará los tres botones. También puedes tocarlos tú. No controla tu móvil real.</p>\n    <div class=\"navdemo-layout\">\n      <div class=\"navdemo-phone\">\n        <div class=\"navdemo-status\">10:08 <span>● ▰ ▰</span></div>\n        <div class=\"navdemo-screen\" data-navdemo-screen><div class=\"navdemo-home\"><b>10:08</b><span>Teléfono de práctica</span></div></div>\n        <div class=\"navdemo-nav\">\n          <button data-navdemo=\"recent\" aria-label=\"Recientes\" title=\"Recientes\"><svg viewBox=\"0 0 40 40\" aria-hidden=\"true\"><rect x=\"11\" y=\"11\" width=\"18\" height=\"18\" rx=\"2\" fill=\"currentColor\"/></svg></button>\n          <button data-navdemo=\"home\" aria-label=\"Inicio\" title=\"Inicio\"><svg viewBox=\"0 0 40 40\" aria-hidden=\"true\"><circle cx=\"20\" cy=\"20\" r=\"10\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.5\"/></svg></button>\n          <button data-navdemo=\"back\" aria-label=\"Atrás\" title=\"Atrás\"><svg viewBox=\"0 0 40 40\" aria-hidden=\"true\"><path d=\"M28 7 L9 20 L28 33 Z\" fill=\"currentColor\"/></svg></button>\n        </div>\n      </div>\n      <div class=\"navdemo-help\">\n        <b data-navdemo-step>Paso 1 de 9</b>\n        <p data-navdemo-caption aria-live=\"polite\">Esta es la pantalla de inicio. Toca un icono para abrir una aplicación.</p>\n        <div>■ <b>Recientes</b> · Cambiar de aplicación</div>\n        <div>◯ <b>Inicio</b> · Pantalla principal</div>\n        <div>◀ <b>Atrás</b> · Retroceder</div>\n      </div>\n    </div>\n    <div class=\"navdemo-controls\">\n      <button class=\"btn small primary\" data-navdemo=\"play\">Ⅱ Pausar</button>\n      <button class=\"btn small\" data-navdemo=\"reset\">↻ Repetir</button>\n    </div>\n  </div>\n  <div class=\"android-nav-cards\">\n    <div class=\"android-nav-card\"><div class=\"android-nav-icon\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><rect x=\"16\" y=\"16\" width=\"32\" height=\"32\" rx=\"5\" fill=\"currentColor\"/></svg></div><strong>1. Aplicaciones recientes</strong><p><b>Izquierda · cuadrado relleno.</b> Muestra las aplicaciones utilizadas para cambiar entre ellas. Desde esa vista también puedes cerrarlas.</p></div>\n    <div class=\"android-nav-card\"><div class=\"android-nav-icon\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"32\" cy=\"32\" r=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/></svg></div><strong>2. Inicio</strong><p><b>Centro · círculo con borde.</b> Te lleva a la pantalla principal sin cerrar necesariamente la aplicación anterior.</p></div>\n    <div class=\"android-nav-card\"><div class=\"android-nav-icon\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M47 12 L14 32 L47 52 Z\" fill=\"currentColor\"/></svg></div><strong>3. Atrás</strong><p><b>Derecha · triángulo hacia la izquierda.</b> Retrocede a la pantalla o paso anterior.</p></div>\n  </div>\n  <div class=\"note\" style=\"margin-top:16px\"><b>Para el profesor:</b> utiliza esta misma barra que se ve en la fotografía: <b>cuadrado relleno a la izquierda = Recientes</b>, <b>círculo en el centro = Inicio</b> y <b>triángulo a la derecha = Atrás</b>. Practicad primero identificar cada dibujo y luego pulsarlo. No hace falta cerrar todas las aplicaciones constantemente.</div>\n  <div class=\"android-nav-practice\">\n    <h3>Mini ejercicio · Reconocer esta barra de navegación</h3>\n    <ol class=\"rule-list\">\n      <li>Abre una aplicación.</li>\n      <li>Pulsa el <b>triángulo de la derecha (Atrás)</b> para regresar a la pantalla anterior.</li>\n      <li>Pulsa el <b>círculo del centro (Inicio)</b> para regresar a la pantalla principal.</li>\n      <li>Abre dos aplicaciones diferentes.</li>\n      <li>Pulsa las <b>cuadrado relleno de la izquierda (Recientes)</b> para ver las aplicaciones y cambiar de una a otra.</li>\n      <li>Busca, si aparece, el botón para limpiar o cerrar todas las aplicaciones recientes y pruébalo solo con aplicaciones de práctica.</li>\n      <li>Repite la secuencia sin ayuda.</li>\n    </ol>\n    <p class=\"tiny\"><b>Objetivo:</b> que reconozcan los tres botones y sepan cuándo utilizar cada uno.</p>\n  </div>\n  <div class=\"android-nav-questions\">\n    <h3>Preguntas de comprobación</h3>\n    <ul class=\"rule-list\">\n      <li>¿Qué botón utilizarías para volver a la pantalla anterior?</li>\n      <li>Si te pierdes, ¿cómo vuelves a la pantalla de inicio?</li>\n      <li>¿Dónde puedes ver las aplicaciones que estabas usando?</li>\n      <li>¿Es obligatorio cerrar todas las aplicaciones?</li>\n    </ul>\n  </div>\n  <div class=\"android-nav-ai\">\n    <b>Pregunta para la IA</b>\n    <p>«Tengo un Android con un cuadrado relleno a la izquierda, un círculo en el centro y un triángulo a la derecha. Explícame para qué sirve cada botón con palabras sencillas y un paso cada vez».</p>\n    <button class=\"copy-question no-print\" type=\"button\" data-copy=\"Tengo un Android con un cuadrado relleno a la izquierda, un círculo en el centro y un triángulo a la derecha. Explícame para qué sirve cada botón con palabras sencillas y un paso cada vez.\">⧉ Copiar</button>\n  </div>\n  <p class=\"tiny\" style=\"margin-top:12px\"><b>Nota:</b> esta guía refleja la disposición de la imagen enviada. En otros teléfonos Android, la forma, el orden o el color de los símbolos puede cambiar. Si se utilizan gestos, estos botones no suelen aparecer.</p>\n</section>";
+const androidNavGuide = "\n<section class=\"panel android-guide\" aria-labelledby=\"nav3-title\">\n  <span class=\"tag\">CLASE 1 · GUÍA VISUAL</span>\n  <h2 id=\"nav3-title\" style=\"margin:12px 0 9px\">Los tres botones de navegación de Android</h2>\n  <p>Esta es la barra inferior de la imagen que nos has enviado. El <b>cuadrado relleno</b> es Aplicaciones recientes, el <b>círculo</b> es Inicio y el <b>triángulo</b> es Atrás. La imagen reproduce estos símbolos y su orden.</p>\n  <div class=\"android-nav-screen\" role=\"img\" aria-label=\"Barra negra con un cuadrado gris relleno a la izquierda para Aplicaciones recientes, un círculo gris con contorno en el centro para Inicio y un triángulo gris apuntando a la izquierda a la derecha para Atrás\">\n    <div class=\"android-nav-bar\">\n      <span><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><rect x=\"16\" y=\"16\" width=\"32\" height=\"32\" rx=\"5\" fill=\"currentColor\"/></svg></span><span><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"32\" cy=\"32\" r=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/></svg></span><span><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M47 12 L14 32 L47 52 Z\" fill=\"currentColor\"/></svg></span>\n    </div>\n  </div>\n\n  <div class=\"navdemo\" id=\"navdemo\">\n    <span class=\"tag\">BOCETO ANIMADO · PRÁCTICA</span>\n    <h3>Aprende viendo un móvil de ejemplo</h3>\n    <p>El teléfono abrirá aplicaciones de prueba y utilizará los tres botones. También puedes tocarlos tú. No controla tu móvil real.</p>\n    \n    <div class=\"navdemo-variants\" role=\"group\" aria-label=\"Elegir navegación Android\">\n      <strong>¿Qué botones aparecen en tu móvil?</strong>\n      <div class=\"navdemo-variant-options\">\n        <button type=\"button\" data-navdemo-style=\"captura\" aria-pressed=\"true\">Como tu captura</button>\n        <button type=\"button\" data-navdemo-style=\"clasico\" aria-pressed=\"false\">Android clásico</button>\n        <button type=\"button\" data-navdemo-style=\"samsung\" aria-pressed=\"false\">Samsung</button>\n        <button type=\"button\" data-navdemo-style=\"gestos\" aria-pressed=\"false\">Gestos</button>\n      </div>\n      <label class=\"navdemo-order\"><input type=\"checkbox\" data-navdemo-reverse> Invertir orden de Atrás y Recientes</label>\n      <p class=\"navdemo-note\">Los dibujos y su posición pueden cambiar según marca, modelo y ajustes. Su función sigue siendo la misma.</p>\n    </div>\n    <div class=\"navdemo-layout\">\n      <div class=\"navdemo-phone\">\n        <div class=\"navdemo-status\">10:08 <span>● ▰ ▰</span></div>\n        <div class=\"navdemo-screen\" data-navdemo-screen><div class=\"navdemo-home\"><b>10:08</b><span>Teléfono de práctica</span></div></div>\n        <div class=\"navdemo-nav\">\n          <button data-navdemo=\"recent\" aria-label=\"Recientes\" title=\"Recientes\"><svg viewBox=\"0 0 40 40\" aria-hidden=\"true\"><rect x=\"11\" y=\"11\" width=\"18\" height=\"18\" rx=\"2\" fill=\"currentColor\"/></svg></button>\n          <button data-navdemo=\"home\" aria-label=\"Inicio\" title=\"Inicio\"><svg viewBox=\"0 0 40 40\" aria-hidden=\"true\"><circle cx=\"20\" cy=\"20\" r=\"10\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3.5\"/></svg></button>\n          <button data-navdemo=\"back\" aria-label=\"Atrás\" title=\"Atrás\"><svg viewBox=\"0 0 40 40\" aria-hidden=\"true\"><path d=\"M28 7 L9 20 L28 33 Z\" fill=\"currentColor\"/></svg></button>\n        </div>\n      </div>\n      <div class=\"navdemo-help\">\n        <b data-navdemo-step>Paso 1 de 9</b>\n        <p data-navdemo-caption aria-live=\"polite\">Esta es la pantalla de inicio. Toca un icono para abrir una aplicación.</p>\n        <div>■ <b>Recientes</b> · Cambiar de aplicación</div>\n        <div>◯ <b>Inicio</b> · Pantalla principal</div>\n        <div>◀ <b>Atrás</b> · Retroceder</div>\n      </div>\n    </div>\n    <div class=\"navdemo-gestures\" data-navdemo-gestures hidden>\n    <p><b>Prueba los gestos:</b> desliza desde un lateral para Atrás; sube desde abajo para Inicio; sube desde abajo y mantén para Recientes.</p>\n    <div class=\"navdemo-gesture-actions\">\n      <button type=\"button\" data-navdemo=\"back\">← Atrás</button>\n      <button type=\"button\" data-navdemo=\"home\">↑ Inicio</button>\n      <button type=\"button\" data-navdemo=\"recent\">↑ Mantener · Recientes</button>\n    </div>\n  </div>\n  <div class=\"navdemo-controls\">\n      <button class=\"btn small primary\" data-navdemo=\"play\">Ⅱ Pausar</button>\n      <button class=\"btn small\" data-navdemo=\"reset\">↻ Repetir</button>\n    </div>\n  </div>\n  <div class=\"android-nav-cards\">\n    <div class=\"android-nav-card\"><div class=\"android-nav-icon\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><rect x=\"16\" y=\"16\" width=\"32\" height=\"32\" rx=\"5\" fill=\"currentColor\"/></svg></div><strong>1. Aplicaciones recientes</strong><p><b>Izquierda · cuadrado relleno.</b> Muestra las aplicaciones utilizadas para cambiar entre ellas. Desde esa vista también puedes cerrarlas.</p></div>\n    <div class=\"android-nav-card\"><div class=\"android-nav-icon\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><circle cx=\"32\" cy=\"32\" r=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"6\"/></svg></div><strong>2. Inicio</strong><p><b>Centro · círculo con borde.</b> Te lleva a la pantalla principal sin cerrar necesariamente la aplicación anterior.</p></div>\n    <div class=\"android-nav-card\"><div class=\"android-nav-icon\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><path d=\"M47 12 L14 32 L47 52 Z\" fill=\"currentColor\"/></svg></div><strong>3. Atrás</strong><p><b>Derecha · triángulo hacia la izquierda.</b> Retrocede a la pantalla o paso anterior.</p></div>\n  </div>\n  <div class=\"note\" style=\"margin-top:16px\"><b>Para el profesor:</b> utiliza esta misma barra que se ve en la fotografía: <b>cuadrado relleno a la izquierda = Recientes</b>, <b>círculo en el centro = Inicio</b> y <b>triángulo a la derecha = Atrás</b>. Practicad primero identificar cada dibujo y luego pulsarlo. No hace falta cerrar todas las aplicaciones constantemente.</div>\n  <div class=\"android-nav-practice\">\n    <h3>Mini ejercicio · Reconocer esta barra de navegación</h3>\n    <ol class=\"rule-list\">\n      <li>Abre una aplicación.</li>\n      <li>Pulsa el <b>triángulo de la derecha (Atrás)</b> para regresar a la pantalla anterior.</li>\n      <li>Pulsa el <b>círculo del centro (Inicio)</b> para regresar a la pantalla principal.</li>\n      <li>Abre dos aplicaciones diferentes.</li>\n      <li>Pulsa las <b>cuadrado relleno de la izquierda (Recientes)</b> para ver las aplicaciones y cambiar de una a otra.</li>\n      <li>Busca, si aparece, el botón para limpiar o cerrar todas las aplicaciones recientes y pruébalo solo con aplicaciones de práctica.</li>\n      <li>Repite la secuencia sin ayuda.</li>\n    </ol>\n    <p class=\"tiny\"><b>Objetivo:</b> que reconozcan los tres botones y sepan cuándo utilizar cada uno.</p>\n  </div>\n  <div class=\"android-nav-questions\">\n    <h3>Preguntas de comprobación</h3>\n    <ul class=\"rule-list\">\n      <li>¿Qué botón utilizarías para volver a la pantalla anterior?</li>\n      <li>Si te pierdes, ¿cómo vuelves a la pantalla de inicio?</li>\n      <li>¿Dónde puedes ver las aplicaciones que estabas usando?</li>\n      <li>¿Es obligatorio cerrar todas las aplicaciones?</li>\n    </ul>\n  </div>\n  <div class=\"android-nav-ai\">\n    <b>Pregunta para la IA</b>\n    <p>«Tengo un Android con un cuadrado relleno a la izquierda, un círculo en el centro y un triángulo a la derecha. Explícame para qué sirve cada botón con palabras sencillas y un paso cada vez».</p>\n    <button class=\"copy-question no-print\" type=\"button\" data-copy=\"Tengo un Android con un cuadrado relleno a la izquierda, un círculo en el centro y un triángulo a la derecha. Explícame para qué sirve cada botón con palabras sencillas y un paso cada vez.\">⧉ Copiar</button>\n  </div>\n  <p class=\"tiny\" style=\"margin-top:12px\"><b>Nota:</b> esta guía refleja la disposición de la imagen enviada. En otros teléfonos Android, la forma, el orden o el color de los símbolos puede cambiar. Si se utilizan gestos, estos botones no suelen aparecer.</p>\n</section>";
 
 
 /* Boceto Android: las aplicaciones y mensajes son completamente ficticios. */
@@ -281,14 +301,14 @@ const navDemoSteps=[
   ['home','','Pantalla principal: toca un icono para abrir una aplicación.',''],
   ['app','wa','Abres WhatsApp y ves tus conversaciones de ejemplo.',''],
   ['detail','wa','Tocas una conversación para ver su contenido.',''],
-  ['app','wa','Atrás (triángulo): vuelves a las conversaciones.','back'],
-  ['home','','Inicio (círculo): vuelves a la pantalla principal.','home'],
+  ['app','wa','Atrás: vuelves a las conversaciones.','back'],
+  ['home','','Inicio: vuelves a la pantalla principal.','home'],
   ['app','mail','Abres Correo sin tener que cerrar WhatsApp.',''],
-  ['recent','','Recientes (cuadrado): ves las aplicaciones utilizadas.','recent'],
+  ['recent','','Recientes: ves las aplicaciones utilizadas.','recent'],
   ['app','wa','Cambias de Correo a WhatsApp tocando su tarjeta.',''],
   ['home','','Inicio: regresas a la pantalla principal.','home']
 ];
-const navDemo={view:'home',app:'',focus:'',caption:navDemoSteps[0][2],visited:[],playing:true,step:0};
+const navDemo={view:'home',app:'',focus:'',caption:navDemoSteps[0][2],visited:[],playing:true,step:0,style:['captura','clasico','samsung','gestos'].includes(data.custom?.navDemoStyle)?data.custom.navDemoStyle:'captura',reverse:!!data.custom?.navDemoReverse};
 const navDemoApps={wa:['WhatsApp','☎'],mail:['Correo','✉'],photos:['Fotos','▧']};
 function navDemoApply(view,app,caption,focus=''){
   navDemo.view=view;navDemo.app=app;navDemo.caption=caption;navDemo.focus=focus;
@@ -304,17 +324,56 @@ function navDemoHtml(){
   const content=detail?'<div class="navdemo-bubble">Hola, ¿cómo estás? 😊</div><div class="navdemo-bubble">¡Muy bien! Estoy aprendiendo a usar los botones.</div>':'<p>Contenido de ejemplo</p><button class="navdemo-entry" data-navdemo="detail"><b>'+(navDemo.app==='wa'?'Gema':navDemo.app==='mail'?'Correo recibido':'Foto de vacaciones')+'</b><small>'+(navDemo.app==='wa'?'Hola, ¿cómo estás?':'Tocar para abrir')+'</small></button><button class="navdemo-entry" data-navdemo="detail"><b>'+(navDemo.app==='wa'?'Familia':'Otro elemento')+'</b><small>Contenido de prueba</small></button>';
   return '<div class="navdemo-app"><div class="navdemo-appheader '+(navDemo.app==='wa'?'':navDemo.app)+'">'+app[0]+(detail?' · Detalle':'')+'</div><div class="navdemo-appbody">'+content+'</div></div>';
 }
+
+function navDemoIcon(action){
+  const svg=shape=>'<svg viewBox="0 0 40 40" aria-hidden="true">'+shape+'</svg>';
+  if(action==='home'){
+    return navDemo.style==='captura'
+      ?svg('<rect x="10" y="10" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="3"/>')
+      :svg('<circle cx="20" cy="20" r="10" fill="none" stroke="currentColor" stroke-width="3"/>');
+  }
+  if(action==='back'){
+    return navDemo.style==='samsung'
+      ?svg('<path d="M26 10 L16 20 L26 30" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>')
+      :svg('<path d="M28 7 L9 20 L28 33 Z" fill="currentColor"/>');
+  }
+  if(navDemo.style==='captura')return svg('<path d="M10 12 H30 M10 20 H30 M10 28 H30" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>');
+  if(navDemo.style==='samsung')return svg('<path d="M11 12 V28 M20 12 V28 M29 12 V28" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/>');
+  return svg('<rect x="11" y="11" width="18" height="18" rx="2" fill="currentColor"/>');
+}
+function navDemoNavHtml(){
+  if(navDemo.style==='gestos')return '<button type="button" class="navdemo-handle" data-navdemo="gesture-help" title="Cómo usar los gestos" aria-label="Instrucciones de gestos"></button>';
+  const actions=navDemo.reverse?['back','home','recent']:['recent','home','back'];
+  const labels={recent:'Recientes',home:'Inicio',back:'Atrás'};
+  return actions.map(action=>'<button type="button" data-navdemo="'+action+'" title="'+labels[action]+'" aria-label="'+labels[action]+'">'+navDemoIcon(action)+'</button>').join('');
+}
 function navDemoRender(){
   const root=document.getElementById('navdemo');if(!root)return;
   root.querySelector('[data-navdemo-screen]').innerHTML='<div class="navdemo-view">'+navDemoHtml()+'</div>';
+  root.querySelector('.navdemo-phone').classList.toggle('gesture-nav',navDemo.style==='gestos');
+  const bar=root.querySelector('.navdemo-nav');
+  bar.classList.toggle('gestures',navDemo.style==='gestos');
+  bar.innerHTML=navDemoNavHtml();
+  root.querySelectorAll('[data-navdemo-style]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.navdemoStyle===navDemo.style)));
+  const check=root.querySelector('[data-navdemo-reverse]');
+  check.checked=navDemo.reverse;check.disabled=navDemo.style==='gestos';
+  root.querySelector('[data-navdemo-gestures]').hidden=navDemo.style!=='gestos';
+
   root.querySelector('[data-navdemo-caption]').textContent=navDemo.caption;
   root.querySelector('[data-navdemo-step]').textContent=navDemo.step>=0?'Paso '+(navDemo.step+1)+' de '+navDemoSteps.length:'Práctica libre';
   root.querySelector('[data-navdemo="play"]').textContent=navDemo.playing?'Ⅱ Pausar':'▶ Reproducir';
   root.querySelectorAll('.navdemo-nav button').forEach(b=>b.classList.toggle('highlight',b.dataset.navdemo===navDemo.focus));
 }
 document.addEventListener('click',e=>{
+  const preset=e.target.closest('#navdemo [data-navdemo-style]');
+  if(preset){
+    e.preventDefault();
+    navDemo.style=preset.dataset.navdemoStyle;data.custom??={};data.custom.navDemoStyle=navDemo.style;save();
+    navDemoRender();return;
+  }
   const b=e.target.closest('#navdemo [data-navdemo]');if(!b)return;
   e.preventDefault();const a=b.dataset.navdemo;
+  if(a==='gesture-help'){navDemo.playing=false;navDemo.step=-1;navDemoApply(navDemo.view,navDemo.app,'Gestos: desliza desde un lateral para Atrás; sube desde abajo para Inicio; sube y mantén para Recientes.');return}
   if(a==='play'){navDemo.playing=!navDemo.playing;if(navDemo.playing){navDemo.step=0;navDemo.visited=[];navDemoApply(...navDemoSteps[0])}else navDemoRender();return}
   if(a==='reset'){navDemo.playing=true;navDemo.step=0;navDemo.visited=[];navDemoApply(...navDemoSteps[0]);return}
   navDemo.playing=false;navDemo.step=-1;
@@ -327,6 +386,29 @@ document.addEventListener('click',e=>{
     else navDemoApply('home','','Atrás: has retrocedido hasta la pantalla principal.','back');
   }
 });
+
+document.addEventListener('change',e=>{
+  if(!e.target.matches('#navdemo [data-navdemo-reverse]'))return;
+  navDemo.reverse=e.target.checked;data.custom??={};data.custom.navDemoReverse=navDemo.reverse;save();navDemoRender();
+});
+let navDemoTouch=null;
+document.addEventListener('pointerdown',e=>{
+  const screen=e.target.closest('#navdemo .navdemo-screen');
+  if(!screen||navDemo.style!=='gestos'||e.target.closest('button'))return;
+  const box=screen.getBoundingClientRect();
+  navDemoTouch={id:e.pointerId,x:e.clientX,y:e.clientY,time:Date.now(),w:box.width,h:box.height};
+});
+document.addEventListener('pointerup',e=>{
+  const start=navDemoTouch;navDemoTouch=null;
+  if(!start||start.id!==e.pointerId||navDemo.style!=='gestos')return;
+  const dx=e.clientX-start.x,dy=e.clientY-start.y;
+  let action='';
+  if((start.x<45&&dx>45)||(start.x>start.w-45&&dx< -45))action='back';
+  else if(start.y>start.h-75&&dy< -45)action=Date.now()-start.time>450?'recent':'home';
+  if(action){e.preventDefault();document.querySelector('#navdemo [data-navdemo="'+action+'"]')?.click()}
+});
+document.addEventListener('pointercancel',()=>{navDemoTouch=null});
+
 setInterval(()=>{
   if(!navDemo.playing||route!=='clase-1'||document.visibilityState==='hidden')return;
   const root=document.getElementById('navdemo');

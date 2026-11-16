@@ -24,6 +24,23 @@
     /* Clase 1: navegación Android con botones */
     .android-guide{overflow:hidden}.android-nav-screen{margin:15px auto 20px;max-width:380px;background:linear-gradient(#dfeee9,#f2f6f3);padding:15px 20px 0;border:7px solid #284954;border-radius:24px;box-shadow:0 12px 23px rgba(24,49,55,.09);overflow:hidden}.android-nav-screen-top{text-align:center;color:#58786f;font-size:10px;font-weight:800;letter-spacing:.13em;padding:13px 0 29px}.android-nav-bar{display:flex;align-items:center;justify-content:space-around;margin:0 -20px;background:#fff;min-height:55px;padding:7px 16px}.android-nav-bar span{display:grid;place-items:center;flex:1;color:#26363d}.android-nav-bar svg{width:23px;height:23px}.android-nav-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.android-nav-card{background:#f3f5f0;border:1px solid #e0e7e0;border-radius:13px;padding:13px;min-width:0}.android-nav-card strong{display:block;font-size:13px;margin:8px 0 5px}.android-nav-card p{font-size:12px;line-height:1.55;margin:0;color:#52666b}.android-nav-icon{width:43px;height:43px;display:grid;place-items:center;background:#e1ece7;border-radius:11px;color:#1f5f5a}.android-nav-icon svg{width:26px;height:26px}.android-nav-practice,.android-nav-questions,.android-nav-ai{margin-top:18px;padding-top:17px;border-top:1px solid var(--line)}.android-nav-practice h3,.android-nav-questions h3{margin:0 0 9px}.android-nav-ai{background:#f7faf5;padding:14px;border:1px solid #e3ebe1;border-radius:12px}.android-nav-ai p{font-size:13px;margin:7px 0 9px}.android-nav-ai .copy-question{min-height:28px}
     @media(max-width:520px){.android-nav-cards{grid-template-columns:1fr}.android-nav-card{display:grid;grid-template-columns:43px 1fr;column-gap:11px;align-items:start}.android-nav-card .android-nav-icon{grid-row:span 2}.android-nav-card strong{margin:0 0 3px}.android-nav-card p{grid-column:2}.android-nav-screen{max-width:330px}}
+
+    /* Edición de pasos y preguntas en la primera clase */
+    .item-actions{display:inline-flex;align-items:center;justify-content:flex-end;gap:5px;flex-wrap:wrap;flex:0 0 auto}
+    .step-instruction .item-actions{max-width:158px}
+    .item-edit,.item-revert{display:inline-flex;align-items:center;justify-content:center;border:1px solid #d6e1da;border-radius:7px;background:#f8fbf8;color:#385f59;min-height:27px;min-width:27px;padding:4px 7px;font-size:12px;line-height:1;cursor:pointer}
+    .item-edit:hover,.item-revert:hover{background:#e1efe6}
+    .item-edit{font-size:17px}
+    .item-revert{font-size:10px}
+    .inline-editor{width:100%;padding:8px;background:#eef4ed;border-radius:10px}
+    .inline-editor label,.custom-question-add label{display:block;font-size:12px;font-weight:800;margin:0 0 7px;color:#385f59}
+    .inline-editor .textarea,.custom-question-add .textarea{font-size:14px;line-height:1.5;resize:vertical}
+    .inline-editor .checkline{margin-top:9px}
+    .editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+    .custom-question-add{margin-top:14px;border:1px dashed #a8c5b8;border-radius:12px;padding:16px;background:#f4f8f2}
+    .custom-question-add .btn{margin-top:10px}
+    .custom-question-add .tiny{margin:9px 0 0}
+    @media(max-width:520px){.step-instruction,.question-item{gap:7px}.step-instruction .item-actions{max-width:118px}.item-actions{gap:4px}.item-revert{padding:4px 5px}.item-edit{min-width:25px;padding:4px 5px}}
     @media(max-width:1120px){.layout{grid-template-columns:230px minmax(0,1fr)}.main{padding:0 22px 50px}.hero{grid-template-columns:1fr 145px;padding:27px}.hero-art{transform:rotate(8deg) scale(.8)}.two-cols{grid-template-columns:1fr}.flow-table{max-width:none}}
     @media(max-width:790px){.layout{display:block}.sidebar{position:fixed;z-index:30;left:0;top:0;width:min(310px,88vw);height:100dvh;transform:translateX(-105%);transition:transform .2s;box-shadow:0 0 45px rgba(0,0,0,.2)}.sidebar.open{transform:translateX(0)}.mobile-menu{display:inline-flex}.main{padding:0 17px 45px}.topbar{height:69px}.page{padding-top:25px}.hero{grid-template-columns:1fr;min-height:auto;padding:27px}.hero-art{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.lesson-grid{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}.page h1{font-size:36px}.pair,.status-block{grid-template-columns:1fr}.footer{display:block}.footer span{display:block}.form-row{grid-template-columns:1fr 1fr}}
     @media(max-width:520px){.top-actions .btn span{display:none}.hero h1{font-size:34px}.hero .hero-foot .btn{padding:10px 12px;font-size:11px}.panel{padding:17px}.field-row,.manual-visual,.survey-controls,.qa-grid{grid-template-columns:1fr}.survey-controls{padding-left:0}.survey-footer{padding-left:0}.lesson-intro{grid-template-columns:1fr auto}.flow-step{grid-template-columns:60px 1fr;gap:10px;padding:12px}.kpi{padding:13px}.kpi strong{font-size:24px}.form-row{grid-template-columns:1fr}}
@@ -115,13 +132,90 @@ function home(){return `<div class="page">
  <section class="section"><div class="panel"><h3>Lo primero: una conversación, no un examen</h3><p>La entrevista inicial tiene diez preguntas. Puedes registrar por separado las respuestas de ambos, incluidos sus intereses y dudas, y ver qué queda por revisar.</p><div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><b>${surveyReviewed()} / ${interview.length} preguntas revisadas</b>${btn('Abrir la encuesta →','encuesta')}</div></div></section>
  </div>`}
 const androidNavGuide = "\n<section class=\"panel android-guide\" aria-labelledby=\"nav3-title\">\n  <span class=\"tag\">CLASE 1 · GUÍA VISUAL</span>\n  <h2 id=\"nav3-title\" style=\"margin:12px 0 9px\">Los tres botones básicos de Android</h2>\n  <p>En muchos teléfonos Android aparecen tres botones en la parte inferior. Son como un pequeño mapa para orientarse. Sus dibujos y su orden pueden variar según el modelo.</p>\n  <div class=\"android-nav-screen\" role=\"img\" aria-label=\"Ejemplo de barra inferior de Android: Atrás, Inicio y Aplicaciones recientes, de izquierda a derecha\">\n    <div class=\"android-nav-screen-top\">EJEMPLO DE BARRA INFERIOR</div>\n    <div class=\"android-nav-bar\">\n      <span><svg viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M23 5L8 16l15 11Z\" fill=\"currentColor\"/></svg></span><span><svg viewBox=\"0 0 32 32\" aria-hidden=\"true\"><circle cx=\"16\" cy=\"16\" r=\"10\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/></svg></span><span><svg viewBox=\"0 0 32 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"7\" width=\"18\" height=\"18\" rx=\"1.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/></svg></span>\n    </div>\n  </div>\n  <div class=\"android-nav-cards\">\n    <div class=\"android-nav-card\">\n      <div class=\"android-nav-icon\"><svg viewBox=\"0 0 32 32\" aria-hidden=\"true\"><path d=\"M23 5L8 16l15 11Z\" fill=\"currentColor\"/></svg></div>\n      <strong>Atrás</strong>\n      <p>Vuelve a la pantalla anterior. Es como retroceder un paso.</p>\n    </div>\n    <div class=\"android-nav-card\">\n      <div class=\"android-nav-icon\"><svg viewBox=\"0 0 32 32\" aria-hidden=\"true\"><circle cx=\"16\" cy=\"16\" r=\"10\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/></svg></div>\n      <strong>Inicio</strong>\n      <p>Te lleva a la pantalla principal, tu lugar conocido. No suele cerrar la aplicación.</p>\n    </div>\n    <div class=\"android-nav-card\">\n      <div class=\"android-nav-icon\"><svg viewBox=\"0 0 32 32\" aria-hidden=\"true\"><rect x=\"7\" y=\"7\" width=\"18\" height=\"18\" rx=\"1.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"/></svg></div>\n      <strong>Aplicaciones recientes</strong>\n      <p>Muestra las aplicaciones usadas para cambiar entre ellas. Puedes deslizar una para cerrarla y, en algunos móviles, pulsar «Cerrar todo».</p>\n    </div>\n  </div>\n  <div class=\"note\" style=\"margin-top:16px\"><b>Para el profesor:</b> señala los tres botones en sus teléfonos reales. Repite estas asociaciones: <b>Atrás = retroceder</b>, <b>Inicio = volver a casa</b>, <b>Recientes = ver lo que estaba abierto</b>. No es necesario cerrar todas las aplicaciones cada vez.</div>\n  <div class=\"android-nav-practice\">\n    <h3>Mini ejercicio · Conocer los tres botones</h3>\n    <ol class=\"rule-list\">\n      <li>Abre una aplicación.</li>\n      <li>Pulsa Atrás para regresar a la pantalla anterior.</li>\n      <li>Pulsa Inicio para regresar a la pantalla principal.</li>\n      <li>Abre dos aplicaciones diferentes.</li>\n      <li>Pulsa Aplicaciones recientes para verlas y cambiar de una a otra.</li>\n      <li>Si aparece la opción, busca «Cerrar todo» y pruébala con aplicaciones de práctica.</li>\n      <li>Repite la secuencia sin ayuda.</li>\n    </ol>\n    <p class=\"tiny\"><b>Objetivo:</b> que reconozcan los tres botones y sepan cuándo utilizar cada uno.</p>\n  </div>\n  <div class=\"android-nav-questions\">\n    <h3>Preguntas de comprobación</h3>\n    <ul class=\"rule-list\">\n      <li>¿Qué botón utilizarías para volver a la pantalla anterior?</li>\n      <li>Si te pierdes, ¿cómo vuelves a la pantalla de inicio?</li>\n      <li>¿Dónde puedes ver las aplicaciones que estabas usando?</li>\n      <li>¿Es obligatorio cerrar todas las aplicaciones?</li>\n    </ul>\n  </div>\n  <div class=\"android-nav-ai\">\n    <b>Pregunta para la IA</b>\n    <p>«Tengo un móvil Android con tres botones abajo. Explícame el botón de atrás, el de inicio y el de aplicaciones recientes, con palabras muy sencillas y un paso cada vez».</p>\n    <button class=\"copy-question no-print\" type=\"button\" data-copy=\"Tengo un móvil Android con tres botones abajo. Explícame el botón de atrás, el de inicio y el de aplicaciones recientes, con palabras muy sencillas y un paso cada vez.\">⧉ Copiar</button>\n  </div>\n  <p class=\"tiny\" style=\"margin-top:12px\">Esta guía es para la navegación por botones. Si el teléfono utiliza gestos, estos símbolos pueden no mostrarse.</p>\n</section>";
+
+let editingStep = null;
+let editingQuestion = null;
+function getStepText(i,j) {
+  const base=lessons[i].exercise.steps[j];
+  const saved=(data.lessons[i]||{}).stepOverrides;
+  return i===0 && saved && typeof saved[j]==='string' ? saved[j] : base;
+}
+function renderExerciseStep(i,j,s,steps) {
+  const effective=getStepText(i,j);
+  const edited=i===0 && effective!==s;
+  const active=i===0 && editingStep===j;
+  let content;
+  if(active){
+    content='<div class="inline-editor"><label for="edit-step-'+j+'">Editar paso '+(j+1)+'</label><textarea id="edit-step-'+j+'" class="textarea" rows="3" maxlength="600" data-step-editor="'+j+'">'+esc(effective)+'</textarea><div class="editor-actions"><button type="button" class="btn small primary no-print" data-save-step="'+j+'">Guardar</button><button type="button" class="btn small no-print" data-cancel-step>Cancelar</button></div><div class="tiny">Se guardará en este navegador al pulsar Guardar.</div></div>';
+  }else{
+    content='<div class="step-instruction"><div class="step-text">'+esc(effective)+'</div><div class="item-actions"><button class="copy-question no-print" type="button" data-copy="'+esc(effective)+'" title="Copiar paso '+(j+1)+'" aria-label="Copiar paso '+(j+1)+'">⧉ Copiar</button>';
+    if(i===0){
+      content+='<button class="item-edit no-print" type="button" data-edit-step="'+j+'" title="Editar paso '+(j+1)+'" aria-label="Editar paso '+(j+1)+'">✎</button>';
+      if(edited)content+='<button class="item-revert no-print" type="button" data-revert-step="'+j+'" title="Restaurar el paso original">Original</button>';
+    }
+    content+='</div></div>';
+  }
+  const checks=['father','mother'].map(p=>'<label><input type="checkbox" data-field="step" data-lesson="'+i+'" data-step="'+j+'" data-person="'+p+'" '+((steps[p]||{})[j]?'checked':'')+'> '+esc(personName(p))+': hecho</label>').join('');
+  return '<div class="exercise-step"><span class="step-num">'+(j+1)+'</span><div>'+content+'<div class="checkline">'+checks+'</div></div></div>';
+}
+function lessonQuestionRows(i){
+  const l=lessons[i],ld=data.lessons[i]||{};
+  const defaults=l.questions.map((q,j)=>({kind:'base',index:j,text:typeof (ld.questionOverrides||{})[j]==='string'?ld.questionOverrides[j]:q}));
+  if(i!==0)return defaults;
+  const extras=Array.isArray(ld.customQuestions)?ld.customQuestions:[];
+  return defaults.concat(extras.map((q,j)=>({kind:'custom',index:j,text:String(q)})));
+}
+function renderLessonQuestions(i){
+  let html=lessonQuestionRows(i).map((item,n)=>{
+    const editing=i===0 && editingQuestion && editingQuestion.kind===item.kind && editingQuestion.index===item.index;
+    const id=item.kind+'-'+item.index;
+    if(editing){
+      return '<div class="question inline-editor"><label for="question-editor-'+id+'">Editar pregunta '+(n+1)+'</label><textarea class="textarea" rows="3" maxlength="500" id="question-editor-'+id+'" data-question-editor>'+esc(item.text)+'</textarea><div class="editor-actions"><button type="button" class="btn small primary no-print" data-save-question>Guardar</button><button type="button" class="btn small no-print" data-cancel-question>Cancelar</button></div></div>';
+    }
+    let actions='<button class="copy-question no-print" type="button" title="Copiar pregunta" aria-label="Copiar pregunta '+(n+1)+'" data-copy="'+esc(item.text)+'">⧉ Copiar</button>';
+    if(i===0){
+      actions+='<button type="button" class="item-edit no-print" data-edit-question="'+item.kind+':'+item.index+'" title="Editar pregunta" aria-label="Editar pregunta '+(n+1)+'">✎</button>';
+      if(item.kind==='custom')actions+='<button type="button" class="item-revert no-print" data-delete-question="'+item.index+'" title="Eliminar esta pregunta">Eliminar</button>';
+    }
+    return '<div class="question question-item"><span class="question-text"><b>'+(n+1)+'.</b> '+esc(item.text)+'</span><span class="item-actions">'+actions+'</span></div>';
+  }).join('');
+  if(i===0)html+='<div class="custom-question-add no-print"><label for="custom-question-new">Añadir una pregunta a esta clase</label><textarea class="textarea" id="custom-question-new" rows="2" maxlength="500" data-new-question placeholder="Escribe aquí tu pregunta…"></textarea><button type="button" class="btn small primary" data-add-question>+ Guardar pregunta</button><p class="tiny">Puedes añadir, editar y eliminar tus preguntas cuando quieras. Se guardan con el curso en este navegador.</p></div>';
+  return html;
+}
+function saveEditedStep(j){
+  const el=document.querySelector('[data-step-editor="'+j+'"]');
+  if(!el)return;
+  const value=el.value.trim();
+  if(!value){alert('Escribe una instrucción antes de guardarla.');el.focus();return}
+  const ld=lessonData(0);ld.stepOverrides??={};
+  if(value===lessons[0].exercise.steps[j])delete ld.stepOverrides[j];
+  else ld.stepOverrides[j]=value;
+  editingStep=null;save();render();notify('Paso guardado');
+}
+function saveEditedQuestion(){
+  const el=document.querySelector('[data-question-editor]');
+  if(!el || !editingQuestion)return;
+  const value=el.value.trim();
+  if(!value){alert('Escribe una pregunta antes de guardarla.');el.focus();return}
+  const ld=lessonData(0),ed=editingQuestion;
+  if(ed.kind==='custom'){
+    if(!Array.isArray(ld.customQuestions)||ed.index>=ld.customQuestions.length)return;
+    ld.customQuestions[ed.index]=value;
+  }else{
+    ld.questionOverrides??={};
+    if(value===lessons[0].questions[ed.index])delete ld.questionOverrides[ed.index];
+    else ld.questionOverrides[ed.index]=value;
+  }
+  editingQuestion=null;save();render();notify('Pregunta guardada');
+}
+
 function lessonPage(i){const l=lessons[i];if(!l)return home();const ld=lessonData(i);const steps=ld.steps||{};return `<div class="page"><div class="eyebrow">PROGRAMA / CLASE ${String(i+1).padStart(2,'0')} DE 08</div><div class="lesson-intro"><div><h1>${esc(l.title)}</h1><p class="lead" style="margin:0">${esc(l.goal)}</p></div><div class="round-num">${String(i+1).padStart(2,'0')}</div></div>
  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px" class="no-print"><span class="tag">45–60 min</span><span class="tag">Principalmente práctica</span><span class="tag orange">1 ejercicio guiado</span>${i>0?btn('← Anterior',`clase-${i}`):''}${i<7?btn('Siguiente →',`clase-${i+2}`):''}</div>
  <div class="two-cols"><div class="stack">
  <section class="panel"><div class="section-head"><h2>01 · Lo que aprenderán</h2></div><ul class="rule-list">${l.topics.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><div class="note" style="margin-top:17px"><b>Reto de la clase:</b> ${esc(l.challenge)}</div></section>
  ${i===0?androidNavGuide:""}
- <section class="panel"><span class="tag orange">EJERCICIO PRÁCTICO DE HOY</span><div class="exercise-heading"><h2 style="margin:12px 0 9px">${esc(l.exercise.title)}</h2><button class="copy-question no-print" type="button" data-copy="${esc([l.exercise.title, l.exercise.setup, ...l.exercise.steps.map((step,n)=>`${n+1}. ${step}`), `Objetivo: ${l.exercise.success}`].join("\n"))}" title="Copiar ejercicio completo" aria-label="Copiar ejercicio completo">⧉ Copiar todo</button></div><p>${esc(l.exercise.setup)}</p><div class="exercise">${l.exercise.steps.map((s,j)=>`<div class="exercise-step"><span class="step-num">${j+1}</span><div><div class="step-instruction"><div class="step-text">${esc(s)}</div><button class="copy-question no-print" type="button" data-copy="${esc(s)}" title="Copiar paso ${j+1}" aria-label="Copiar paso ${j+1}">⧉ Copiar</button></div><div class="checkline">${['father','mother'].map(p=>`<label><input type="checkbox" data-field="step" data-lesson="${i}" data-step="${j}" data-person="${p}" ${(steps[p]||{})[j]?'checked':''}> ${esc(personName(p))}: hecho</label>`).join('')}</div></div></div>`).join('')}</div><div class="note"><b>¿Cuándo lo damos por conseguido?</b><br>${esc(l.exercise.success)}</div></section>
- <section class="panel"><h2>02 · Preguntas que puedes hacerles</h2><div class="questions">${l.questions.map((q,j)=>`<div class="question question-item"><span class="question-text"><b>${j+1}.</b> ${esc(q)}</span><button class="copy-question no-print" type="button" title="Copiar pregunta" aria-label="Copiar pregunta ${j+1}" data-copy="${esc(q)}">⧉ Copiar</button></div>`).join('')}</div></section>
+ <section class="panel"><span class="tag orange">EJERCICIO PRÁCTICO DE HOY</span><div class="exercise-heading"><h2 style="margin:12px 0 9px">${esc(l.exercise.title)}</h2><button class="copy-question no-print" type="button" data-copy="${esc([l.exercise.title, l.exercise.setup, ...l.exercise.steps.map((step,n)=>`${n+1}. ${getStepText(i,n)}`), `Objetivo: ${l.exercise.success}`].join("\n"))}" title="Copiar ejercicio completo" aria-label="Copiar ejercicio completo">⧉ Copiar todo</button></div><p>${esc(l.exercise.setup)}</p><div class="exercise">${l.exercise.steps.map((s,j)=>renderExerciseStep(i,j,s,steps)).join('')}</div><div class="note"><b>¿Cuándo lo damos por conseguido?</b><br>${esc(l.exercise.success)}</div></section>
+ <section class="panel"><h2>02 · Preguntas que puedes hacerles</h2><div class="questions">${renderLessonQuestions(i)}</div></section>
  <section class="panel"><h2>03 · Misión para la semana</h2><p>${esc(l.mission)}</p><div class="form-row">${['father','mother'].map(p=>`<label class="select-field">${esc(personName(p))} · Misión realizada <select data-field="mission" data-lesson="${i}" data-person="${p}"><option value="pending" ${(ld.mission||{})[p]!=='done'?'selected':''}>Pendiente</option><option value="done" ${(ld.mission||{})[p]==='done'?'selected':''}>Realizada</option></select></label>`).join('')}</div></section>
  </div><aside class="stack">
  <section class="callout"><span class="tag">LA IA EN ESTA CLASE</span><h3 style="margin:13px 0 5px">Que se lo pregunte a ChatGPT</h3><blockquote>${esc(l.ai)}</blockquote><button class="btn small no-print" type="button" data-copy="${esc(l.ai)}">⧉ Copiar pregunta</button></section>
@@ -169,6 +263,43 @@ function setDataField(el){const field=el.dataset.field;let i=el.dataset.lesson;c
  save();if(refresh)render()}
 function copyText(t){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(()=>notify('Texto copiado')).catch(()=>fallbackCopy(t))}else fallbackCopy(t)}
 function fallbackCopy(t){const area=document.createElement('textarea');area.value=t;area.style.cssText='position:fixed;left:-9999px';document.body.append(area);area.select();try{document.execCommand('copy');notify('Texto copiado')}catch(e){notify('Selecciona el texto y cópialo manualmente')}area.remove()}
+document.addEventListener('click',e=>{
+  if(route!=='clase-1')return;
+  const clicked=e.target.closest('button');
+  if(!clicked)return;
+  if(clicked.hasAttribute('data-edit-step')){
+    editingStep=Number(clicked.dataset.editStep);editingQuestion=null;render();
+    document.querySelector('[data-step-editor]')?.focus();return;
+  }
+  if(clicked.hasAttribute('data-save-step')){saveEditedStep(Number(clicked.dataset.saveStep));return}
+  if(clicked.hasAttribute('data-cancel-step')){editingStep=null;render();return}
+  if(clicked.hasAttribute('data-revert-step')){
+    const j=Number(clicked.dataset.revertStep);
+    if(!confirm('¿Restaurar el texto original de este paso?'))return;
+    const ld=lessonData(0);if(ld.stepOverrides)delete ld.stepOverrides[j];
+    editingStep=null;save();render();notify('Texto original restaurado');return;
+  }
+  if(clicked.hasAttribute('data-add-question')){
+    const el=document.querySelector('[data-new-question]');
+    const value=el?.value.trim()||'';
+    if(!value){alert('Escribe la pregunta que quieres añadir.');el?.focus();return}
+    const ld=lessonData(0);ld.customQuestions??=[];ld.customQuestions.push(value);
+    save();render();notify('Pregunta añadida');return;
+  }
+  if(clicked.hasAttribute('data-edit-question')){
+    const [kind,index]=clicked.dataset.editQuestion.split(':');
+    editingQuestion={kind,index:Number(index)};editingStep=null;render();
+    document.querySelector('[data-question-editor]')?.focus();return;
+  }
+  if(clicked.hasAttribute('data-save-question')){saveEditedQuestion();return}
+  if(clicked.hasAttribute('data-cancel-question')){editingQuestion=null;render();return}
+  if(clicked.hasAttribute('data-delete-question')){
+    const j=Number(clicked.dataset.deleteQuestion);
+    if(!confirm('¿Eliminar esta pregunta personalizada?'))return;
+    const ld=lessonData(0);if(!Array.isArray(ld.customQuestions))return;
+    ld.customQuestions.splice(j,1);editingQuestion=null;save();render();notify('Pregunta eliminada');return;
+  }
+});
 document.addEventListener('click',e=>{const navBtn=e.target.closest('[data-route]');if(navBtn){e.preventDefault();go(navBtn.dataset.route);return}const copy=e.target.closest('[data-copy]');if(copy){copyText(copy.dataset.copy);return}if(e.target.closest('#menuButton')){$('#sidebar').classList.toggle('open');return}if(e.target.closest('#printBtn')||e.target.closest('#printSecondary')){printSection();return}if(e.target.closest('#exportBtn')||e.target.closest('#exportSecondary')){download();return}if(e.target.closest('#importBtn')){$('#importInput').click();return}if(e.target.closest('#resetBtn')){if(confirm('¿Borrar TODOS los avances, notas y respuestas guardados en este navegador? Esta acción no se puede deshacer.')){data=clone(DEFAULT);save();render();notify('Cuaderno reiniciado')}return}if(window.innerWidth<790&&!e.target.closest('#sidebar')&&!e.target.closest('#menuButton'))$('#sidebar').classList.remove('open')});
 document.addEventListener('change',e=>{if(e.target.matches('[data-field]'))setDataField(e.target)});
 document.addEventListener('input',e=>{if(e.target.matches('textarea[data-field], input[data-field="profile"], input[data-field="survey-answer"]'))setDataField(e.target)});

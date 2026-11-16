@@ -165,6 +165,21 @@
     .navdemo-gesture-actions{display:flex;flex-wrap:wrap;gap:7px}
     .navdemo-gesture-actions button{padding:8px 9px;border-radius:8px;border:1px solid #bad0c3;background:#fff;color:#25574f;font-size:11px;font-weight:700}
     @media(max-width:520px){.navdemo-variants{padding:10px}.navdemo-variant-options button{font-size:11px}}
+
+    /* Cierre interactivo de tarjetas en la vista Recientes. */
+    .navdemo-recentview{padding:13px 9px;overflow-y:auto}
+    .navdemo-recentcards{margin-top:9px;gap:7px}
+    .navdemo-recentcard{position:relative;min-width:0;min-height:144px;background:white;border:2px solid white;border-radius:11px;box-shadow:0 3px 9px #163a3520;overflow:hidden;animation:navdemo-enter .24s ease-out both;touch-action:pan-y}
+    .navdemo-recentcard .navdemo-recent-open{display:flex;flex-direction:column;width:100%;min-height:144px;padding:0 0 14px;border:0;border-radius:0;color:#254a50;font-size:11px;font-weight:700;overflow:hidden;align-items:stretch;background:#fff;cursor:pointer}
+    .navdemo-recentcard .navdemo-recent-open b{display:block;padding:11px 26px 11px 4px;color:#fff;background:#287c69;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:center}
+    .navdemo-recentcard.mail .navdemo-recent-open b{background:#2677b9}
+    .navdemo-recentcard.photos .navdemo-recent-open b{background:#bd8243}
+    .navdemo-recentcard .navdemo-recent-open span{display:grid;place-items:center;flex:1;font-size:27px}
+    .navdemo-recentcard .navdemo-recent-close{position:absolute;right:4px;top:4px;z-index:1;border:1px solid #ffffff80;border-radius:50%;background:#112f3899;color:#fff;font-size:19px;font-weight:700;line-height:1;width:26px;height:26px;display:grid;place-items:center;cursor:pointer;padding:0}
+    .navdemo-recentcard .navdemo-recent-close:hover,.navdemo-recentcard .navdemo-recent-close:focus-visible{background:#c03d42;color:white}
+    .navdemo-close-all{display:block;margin:12px auto 0;background:#fff;border:1px solid #aec8c0;border-radius:9px;color:#2d5d55;padding:8px 12px;font-size:11px;font-weight:800;cursor:pointer}
+    .navdemo-recent-empty{text-align:center;padding:60px 5px;font-size:12px;color:#375856}
+    @media(max-width:520px){.navdemo-recentcard,.navdemo-recentcard .navdemo-recent-open{min-height:131px}}
   </style>
 </head>
 <body>
@@ -305,7 +320,10 @@ const navDemoSteps=[
   ['home','','Inicio: vuelves a la pantalla principal.','home'],
   ['app','mail','Abres Correo sin tener que cerrar WhatsApp.',''],
   ['recent','','Recientes: ves las aplicaciones utilizadas.','recent'],
-  ['app','wa','Cambias de Correo a WhatsApp tocando su tarjeta.',''],
+  ['recent','','Tocas la X de Correo: desaparece de la lista de Recientes.','recent','close-mail'],
+  ['app','wa','Puedes volver a WhatsApp tocando su tarjeta.',''],
+  ['recent','','Recientes: también puedes cerrar todas las aplicaciones mostradas.','recent'],
+  ['recent','','Cierras todas las aplicaciones recientes de prueba.','recent','close-all'],
   ['home','','Inicio: regresas a la pantalla principal.','home']
 ];
 const navDemo={view:'home',app:'',focus:'',caption:navDemoSteps[0][2],visited:[],playing:false,step:0,style:['captura','clasico','samsung','gestos'].includes(data.custom?.navDemoStyle)?data.custom.navDemoStyle:'captura',reverse:!!data.custom?.navDemoReverse};
@@ -318,7 +336,19 @@ function navDemoApply(view,app,caption,focus=''){
 function navDemoHtml(){
   const icons=Object.entries(navDemoApps);
   if(navDemo.view==='home')return '<div class="navdemo-home"><b>10:08</b><span>Teléfono de práctica</span><div class="navdemo-icons">'+icons.map(([k,v])=>'<button data-navdemo="app-'+k+'"><span class="navdemo-appicon '+(k==='wa'?'':k)+'">'+v[1]+'</span>'+v[0]+'</button>').join('')+'</div></div>';
-  if(navDemo.view==='recent')return '<div class="navdemo-recentview"><strong>Aplicaciones recientes</strong><div class="navdemo-recentcards">'+navDemo.visited.map(k=>'<button class="'+(k==='wa'?'':k)+'" data-navdemo="app-'+k+'"><b>'+navDemoApps[k][0]+'</b><span>'+navDemoApps[k][1]+'</span></button>').join('')+'</div></div>';
+  if(navDemo.view==='recent'){
+    const cards=navDemo.visited.map(k=>
+      '<div class="navdemo-recentcard '+(k==='wa'?'':k)+'" data-navdemo-card="'+k+'">'
+      +'<button type="button" class="navdemo-recent-open" data-navdemo="app-'+k+'" aria-label="Volver a '+navDemoApps[k][0]+'">'
+      +'<b>'+navDemoApps[k][0]+'</b><span>'+navDemoApps[k][1]+'</span></button>'
+      +'<button type="button" class="navdemo-recent-close" data-navdemo="close-'+k+'" aria-label="Cerrar '+navDemoApps[k][0]+'" title="Cerrar '+navDemoApps[k][0]+'">×</button>'
+      +'</div>').join('');
+    return '<div class="navdemo-recentview"><strong>Aplicaciones recientes</strong>'
+      +(navDemo.visited.length
+        ?'<div class="navdemo-recentcards">'+cards+'</div><button type="button" class="navdemo-close-all" data-navdemo="close-all">✕ Cerrar todas</button>'
+        :'<div class="navdemo-recent-empty">No hay aplicaciones recientes.</div>')
+      +'</div>';
+  }
   const app=navDemoApps[navDemo.app]||navDemoApps.wa;
   const detail=navDemo.view==='detail';
   const content=detail?'<div class="navdemo-bubble">Hola, ¿cómo estás? 😊</div><div class="navdemo-bubble">¡Muy bien! Estoy aprendiendo a usar los botones.</div>':'<p>Contenido de ejemplo</p><button class="navdemo-entry" data-navdemo="detail"><b>'+(navDemo.app==='wa'?'Gema':navDemo.app==='mail'?'Correo recibido':'Foto de vacaciones')+'</b><small>'+(navDemo.app==='wa'?'Hola, ¿cómo estás?':'Tocar para abrir')+'</small></button><button class="navdemo-entry" data-navdemo="detail"><b>'+(navDemo.app==='wa'?'Familia':'Otro elemento')+'</b><small>Contenido de prueba</small></button>';
@@ -383,6 +413,19 @@ document.addEventListener('click',e=>{
   }
   if(a==='reset'){navDemo.playing=false;navDemo.step=0;navDemo.visited=[];navDemoApply(...navDemoSteps[0]);return}
   navDemo.playing=false;navDemo.step=-1;
+  if(a==='close-all'){
+    navDemo.visited=[];
+    navDemoApply('recent','','Has cerrado todas las aplicaciones recientes. Puedes abrirlas otra vez desde Inicio.','recent');
+    return;
+  }
+  if(a.startsWith('close-')){
+    const k=a.slice(6);
+    if(navDemo.visited.includes(k)){
+      navDemo.visited=navDemo.visited.filter(x=>x!==k);
+      navDemoApply('recent','','Has cerrado '+navDemoApps[k][0]+' de la vista de Recientes.','recent');
+    }
+    return;
+  }
   if(a.startsWith('app-')){const k=a.slice(4);if(navDemoApps[k])navDemoApply('app',k,'Has abierto '+navDemoApps[k][0]+'. Prueba los tres botones inferiores.');return}
   if(a==='detail'){navDemoApply('detail',navDemo.app,'Has abierto un elemento. Pulsa Atrás (triángulo) para regresar.');return}
   if(a==='home'){navDemoApply('home','','Inicio: has vuelto a la pantalla principal.','home');return}
@@ -415,6 +458,25 @@ document.addEventListener('pointerup',e=>{
 });
 document.addEventListener('pointercancel',()=>{navDemoTouch=null});
 
+
+/* En modo Recientes también se puede deslizar una tarjeta hacia arriba para cerrarla. */
+let navDemoCardPointer=null;
+document.addEventListener('pointerdown',e=>{
+  const card=e.target.closest('#navdemo [data-navdemo-card]');
+  if(!card)return;
+  navDemoCardPointer={id:e.pointerId,y:e.clientY,x:e.clientX,app:card.dataset.navdemoCard};
+});
+document.addEventListener('pointerup',e=>{
+  const start=navDemoCardPointer;navDemoCardPointer=null;
+  if(!start||start.id!==e.pointerId)return;
+  if(e.clientY-start.y< -45&&Math.abs(e.clientX-start.x)<90){
+    e.preventDefault();
+    const btn=document.querySelector('#navdemo [data-navdemo="close-'+start.app+'"]');
+    btn?.click();
+  }
+});
+document.addEventListener('pointercancel',()=>{navDemoCardPointer=null});
+
 setInterval(()=>{
   if(!navDemo.playing||route!=='clase-1'||document.visibilityState==='hidden')return;
   const root=document.getElementById('navdemo');
@@ -423,8 +485,11 @@ setInterval(()=>{
     navDemo.playing=false;navDemoRender();return;
   }
   navDemo.step+=1;
+  const frame=navDemoSteps[navDemo.step];
+  if(frame[4]==='close-mail')navDemo.visited=navDemo.visited.filter(k=>k!=='mail');
+  if(frame[4]==='close-all')navDemo.visited=[];
   if(navDemo.step===navDemoSteps.length-1)navDemo.playing=false;
-  navDemoApply(...navDemoSteps[navDemo.step]);
+  navDemoApply(frame[0],frame[1],frame[2],frame[3]);
 },2400);
 
 let editingStep = null;

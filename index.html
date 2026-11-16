@@ -396,15 +396,15 @@ document.addEventListener('pointerdown',e=>{
   const screen=e.target.closest('#navdemo .navdemo-screen');
   if(!screen||navDemo.style!=='gestos'||e.target.closest('button'))return;
   const box=screen.getBoundingClientRect();
-  navDemoTouch={id:e.pointerId,x:e.clientX,y:e.clientY,time:Date.now(),w:box.width,h:box.height};
+  navDemoTouch={id:e.pointerId,x:e.clientX,y:e.clientY,localX:e.clientX-box.left,localY:e.clientY-box.top,time:Date.now(),w:box.width,h:box.height};
 });
 document.addEventListener('pointerup',e=>{
   const start=navDemoTouch;navDemoTouch=null;
   if(!start||start.id!==e.pointerId||navDemo.style!=='gestos')return;
   const dx=e.clientX-start.x,dy=e.clientY-start.y;
   let action='';
-  if((start.x<45&&dx>45)||(start.x>start.w-45&&dx< -45))action='back';
-  else if(start.y>start.h-75&&dy< -45)action=Date.now()-start.time>450?'recent':'home';
+  if((start.localX<45&&dx>45)||(start.localX>start.w-45&&dx< -45))action='back';
+  else if(start.localY>start.h-75&&dy< -45)action=Date.now()-start.time>450?'recent':'home';
   if(action){e.preventDefault();document.querySelector('#navdemo [data-navdemo="'+action+'"]')?.click()}
 });
 document.addEventListener('pointercancel',()=>{navDemoTouch=null});
